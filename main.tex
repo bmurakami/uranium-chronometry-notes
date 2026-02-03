@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bdm}{\begin{displaymath}}
+\newcommand{\edm}{\end{displaymath}}
+\newcommand{\etc}{{\it etc.}}
+\newcommand{\ie}{{\it i.e.}}
+\newcommand{\eg}{{\it e.g.}}
+
+\title{\small{Notes on}\\\Large\bf{{Uranium Chronometry}}}
+\author{B.~Murakami}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section{Decay theory}
+
+\subsection{Mathematical basics}
+
+The assumption that fundamental physical law, quantum theory in this context, remains unchanged throughout time, means the quantum state of an unstable isotope has no memory. That is, it has no internal clock. In principle, theory is capable of providing a lifetime for an unstable quantum state.\footnote{This is where the physics of this context ends, aside from the experimental extraction of isotope concentrations, which only provides inputs to the analysis, which is purely mathematical.} This allows the statement that the number of isotope decays $dn$ in a short time interval $dt$ is proportional the number of currently existing isotopes. This may be expressed as
+\beq
+    \frac{dn}{dt} = -\lambda n(t),
+\eeq
+where the minus sign is due to the decrease in the particle count $n$ and $\lambda$ is defined as the proportionality constant, called the {\bf decay rate}. The count $n(t)$ is understood to be a statistical ensemble average. This ODE has a simple solution. Defining $t_0 \equiv 0$ and $n_0 \equiv n(0)$,
+%
+\begin{align}
+    \int_{n_0}^{n(t)} \, \frac{dn}{n} &= -\lambda dt \nonumber\\
+    \ln\frac{n(t)}{n_0} &= -\lambda t \nonumber\\
+    n(t) &= n_0 e^{-\lambda t}.
+    \label{exponential-decay}
+\end{align}
+
+If an isotope decays to another unstable isotope, then using unprimed notation for the original isotope and primed notation for the intermediate  isotope, we may write the change in count $dn'$ of the intermediate isotope as the sum of its source and sink.
+\beq
+    \frac{dn'}{dt} = \lambda n - \lambda' n'.
+\eeq
+This is solved as follows.
+\begin{align}
+    \frac{dn'}{dt} &= \lambda n_0 e^{-\lambda t} - \lambda' n' \nonumber\\
+    \frac{dn'}{dt} + \lambda' n' &= \lambda n_0 e^{-\lambda t} \nonumber\\
+    e^{-\lambda't} \, d(n' e^{\lambda't}) &= dt \, \lambda n_0 e^{-\lambda t} \nonumber\\
+    \int_0^t d(n' e^{\lambda't}) &= \int_0^t dt \, \lambda n_0 e^{(\lambda' -\lambda)t} \nonumber\\
+    n'(t) e^{\lambda't} - n'_0 &= \frac{\lambda}{\lambda'-\lambda} n_0 e^{(\lambda' -\lambda)t} \nonumber\\
+    n'(t) &= \frac{\lambda}{\lambda'-\lambda} n_0(e^{-\lambda t} - e^{-\lambda' t})
+    \label{bateman}
+\end{align}
+This is called the {\bf Bateman equation}. If the counts $n(t)$ and $n'(t)$ are known, we may obtain the time $t$ elapsed since the starting with $n_0$ initial isotopes.
+\begin{align}
+    n'(t) &= \frac{\lambda}{\lambda'-\lambda} ne^{\lambda t}(e^{-\lambda t} - e^{-\lambda' t}) \nonumber\\
+    \frac{\lambda' -\lambda}{\lambda}\frac{n'}{n} - 1 &= -e^{(\lambda - \lambda') t} \nonumber\\
+    \ln\left(1 - \frac{\lambda' -\lambda}{\lambda}\frac{n'}{n} \right) &= (\lambda - \lambda') t \nonumber\\
+    t &= \frac 1 {\lambda - \lambda'} \ln\left(1 - \frac{\lambda' -\lambda}{\lambda}\frac{n'}{n} \right)
+    \label{parent-age}
+\end{align}
+
+\subsection{Chronometry value of uranium isotopes}
+
+The chronometry for each uranium isotope has a different scope of value. That is, each isotope can tell a different story with three components: the time elapsed since purification, isotope content, and enrichment history. For forensics, the 234 isotope has the most value and will be discussed in sufficient depth. The others will be summarized.
+
+The 234 isotope has a natural atomic ratio 235 vs.~234 of about 131 and a lifetime of order ${\cal O}(10^5\,)$ yr, compared to 235's lifetime of ${\cal O}(10^9)$ yr. With $\lambda_{{\rm U}\text{-}234} \ll \lambda_{{\rm Th}\text{-}230}$, there is no dominant timescale. However, in the context of uranium forensics, the purification time is much smaller than both isotope lifetimes, yielding a linear expansion of
+\beq
+    \frac{n_{{\rm Th}\text{-}230}(t)}{n_{{\rm U}\text{-}234}(0)} = \lambda_{{\rm U}\text{-}234}t + {\cal O}(\lambda^2 t^2).
+\eeq
+Since forensic time scales are sub-100 yr, the second-order corrections to first order is on the scale of $(\lambda t)^2 \sim {\cal O}(10^{-3})$, which probably rivals experimental error. Still, this result allows quick interpretations. For example, an over-count of thorium, say due to imperfect purification, clearly leads to a linear increase in age.
+
+Assuming perfect purification, this result is somewhat surprising. {\it A priori}, wasn't not clear that we can get percentile or better accuracy on the uranium age. After all, we have a range of isotope lifetimes up to $10^9$ yr, with a goal of measuring an age on the scale of months or years.
+
+\section{Experimental methods}
+
+Notice the assumed starting point for the decay chain is that we start with only the parent isotope and no child or grandchild isotopes. Suppose a uranium swipe sample is taken at a long running facility. Then, if we want this ideal starting point, we'd need to chemically isolate the parent isotope, a process called {\bf purification}. This makes the utility of the decay results seem pointless; \ie it seems all we can do is attempt to reconstruct the time from purification to the time we do our particle counts through some spectroscopy method. But that's much easier done with a stopwatch. Let's go back to carbon dating to see how we can extract some utility out of this.
+
+\subsection{Carbon dating}
+
+Carbon ${}^{12}$C is the stable, common carbon isotope. ${}^{14}$C has a half-life of 5,700~yr and is used for carbon dating. ${}^{14}$C is created from neutron capture on ${}^{14}\rm{N} +n \to {}^{14}\rm{C} + \rm{p}$. Decays of ${}^{14}$C will equilibrate with its production and settle on some relatively ratio. While a plant or animal was alive, it continuously consumed carbon at this fixed ratio. Once it died, the ratio diverges as ${}^{14}$C decays.
+
+Mass spectroscopy can measure the present day ratio $R \equiv n^{14}/n^{12}$ in the fossil sample. If we assume the ratio $R_0$ in the atmosphere is fixed (it's not), then it's the same value as when the organism died. Then the organism died with a ratio $R_{\rm death} = R_0$, implying $n^{14}_{\rm death} = R_0 n^{12}_{\rm death}$. So the ratio $R/R_0 = n^{14}/n^{14}_{\rm death}$, since ${}^{12}$C doesn't decay or $n^{12} = n^{14}_{\rm death}$.
+
+Then by applying (\ref{exponential-decay}),
+\beq
+    \frac R{R_0} = e^{-\lambda_{14}\Delta t},
+\eeq
+we may obtain the elapsed time $\Delta t$ since death. (In real applications, the atmospheric ratio is not fixed and must be adjusted by a known mapping $R_0(t_{\rm death}) = f(t_{\rm death}) R_0(t_{\rm now})$. Notice $t_{\rm death}$ isn't known {\it a priori}, so an iterative numerical solution is needed.)
+
+\subsection{TIMS}
+
+A rough sketch of the {\bf TIMS}, thermal ionization mass spectroscopy, experimental technique follows. The TIMS method gets its name by heating a sample at a filament, ionizing some target atom or molecule. From here, textbook mass spectroscopy follows -- acceleration of the charge by an electric field, circular deflection by a magnetic field, and detection of the ion.
+
+\subsection{Isotope dilution}
+
+An experimental procedure called {\bf isotope dilution} allows a way to obtain the time elapsed since emission of UF${}_6$. The Bateman equation only requires a sample's present day count of thorium isotope and its parent uranium isotope. For concreteness, let's commit to ${}^{230}$Th and ${}^{234}$U. To obtain these counts, this technqiue {\bf spikes} the sample with a known amount of other long-lived isotopes that should not exist in the sample, say ${}^{229}$Th and ${}^{233}$U. The spike is mixed into the sample sufficiently well, such that any fraction of the sample has the same ratios of isotopes.
+
+From mass spectrometry, the counts of each isotope are made. Focusing on thorium first (then uranium separately), we may form a ratio
+\beq
+    R \equiv \frac{n'_{{\rm Th}\text{-}230}}{n'_{{\rm Th}\text{-}229}}
+\eeq
+where the prime notation denotes experimental measurements. We may obtain the sample's count using
+\beq
+    n_{{\rm Th}\text{-}230} = R n_{{\rm Th}\text{-}229}
+\eeq
+where the un-primed notation refers to the sample counts. The same can be done for the uranium isotopes.
+
+\end{document}
