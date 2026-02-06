@@ -1,9 +1,11 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{bm}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{booktabs}
 \lstset{
   basicstyle=\ttfamily,
   mathescape
@@ -29,9 +31,13 @@
 
 \section{Decay theory}
 
-\subsection{Mathematical basics}
+Radionuclide chronometry is a general framework for obtaining the age of unstable nuclides, which includes the most familiar case of carbon dating. These notes focus on the forensic aspects of uranium chronometry. Specifically, given that a uranium isotope generally follows a decay chain of two or more steps, how can we obtain the age of a uranium sample since last {\bf purification}? Purification is defined as a process that isolates the parent isotope. That is, no child (grandchild, etc.) isotopes are present.
 
-The assumption that fundamental physical law, quantum theory in this context, remains unchanged throughout time, means the quantum state of an unstable isotope has no memory. That is, it has no internal clock. In principle, theory is capable of providing a lifetime for an unstable quantum state.\footnote{This is where the physics of this context ends, aside from the experimental extraction of isotope concentrations, which only provides inputs to the analysis, which is purely mathematical.} This allows the statement that the number of isotope decays $dn$ in a short time interval $dt$ is proportional the number of currently existing isotopes. This may be expressed as
+Stanley \cite{Stanley} provides a disappointing but useful review of the theory.
+
+\subsection{Two-step decay}
+
+The assumption that fundamental physical law, quantum theory in this context, remains unchanged throughout time, means the quantum state of an unstable isotope has no memory. That is, it has no internal clock. In principle, theory is capable of providing a half-life for an unstable quantum state.\footnote{This is where the physics of this context ends, aside from the experimental extraction of isotope concentrations, which only provides inputs to the analysis, which is purely mathematical.} This allows the statement that the number of isotope decays $dn$ in a short time interval $dt$ is proportional the number of currently existing isotopes. This may be expressed as
 \beq
     \frac{dn}{dt} = -\lambda n(t),
 \eeq
@@ -44,6 +50,11 @@ where the minus sign is due to the decrease in the particle count $n$ and $\lamb
     \label{exponential-decay}
 \end{align}
 
+The time when $n(t) = \frac 1 2 n_0$ is called the {\bf half-life} $\tau$ and is related to the decay constant by
+\beq
+    \lambda = \frac {\ln (2)} {\tau}.
+\eeq
+
 If an isotope decays to another unstable isotope, then using unprimed notation for the original isotope and primed notation for the intermediate  isotope, we may write the change in count $dn'$ of the intermediate isotope as the sum of its source and sink.
 \beq
     \frac{dn'}{dt} = \lambda n - \lambda' n'.
@@ -55,10 +66,38 @@ This is solved as follows.
     e^{-\lambda't} \, d(n' e^{\lambda't}) &= dt \, \lambda n_0 e^{-\lambda t} \nonumber\\
     \int_0^t d(n' e^{\lambda't}) &= \int_0^t dt \, \lambda n_0 e^{(\lambda' -\lambda)t} \nonumber\\
     n'(t) e^{\lambda't} - n'_0 &= \frac{\lambda}{\lambda'-\lambda} n_0 e^{(\lambda' -\lambda)t} \nonumber\\
-    n'(t) &= \frac{\lambda}{\lambda'-\lambda} n_0(e^{-\lambda t} - e^{-\lambda' t})
+    n'(t) &= \frac{\lambda}{\lambda'-\lambda} n_0(e^{-\lambda t} - e^{-\lambda' t}) \nonumber\\
+    \rho(t) &= \frac{\lambda}{\lambda'-\lambda} (e^{-\lambda t} - e^{-\lambda' t})
     \label{bateman}
 \end{align}
-This is called the {\bf Bateman equation}. If the counts $n(t)$ and $n'(t)$ are known, we may obtain the time $t$ elapsed since the starting with $n_0$ initial isotopes.
+%
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.7\textwidth]{bateman_decay.png}
+  \caption{\small{Two-step (Bateman) decay for $\lambda \sim \lambda'$ and $\lambda \ll \lambda'$. The relevant time scale of forensic uranium chronometry is sub-100 yr. The linear approximation (\ref{linear-regime}) is made explicit by these curves. Also exchange symmetry of decay rates means the $\lambda \gg \lambda'$ and the $\lambda \ll \lambda'$ cases produce the exact same curves.}}
+  \label{bateman-plot}
+\end{figure}
+%
+This is called the {\bf Bateman equation}, but this gives too much credit for a homework-level problem, and should be referred to as {\bf two-step decay} or {\bf two-stage decay}. We have defined the ratio $\rho(t) \equiv n'(t)/n_0$. There are a few things to note.
+\begin{itemize}
+    \item Experimentally, the parent's initial count, $n_0 \equiv n(0)$, is often unobtainable. So we focus on the ratio $n'(t)/n_0$.
+    \item Like single species decay, this follows exponential decay. Eventually, both the parent and child {\it completely} decay away.
+    \item This expression is {\it symmetric} under decay rate exchange $\lambda \leftrightarrow \lambda'$. This ensures that the child count is never negative.
+    \item For uranium forensics, we're interested in small times. To first order, this expression is
+        \beq
+            \rho(t) =  \lambda t + {\cal O}(\lambda^2 t^2, \lambda'^2 t^2).
+            \label{linear-regime}
+        \eeq
+        Notice two important insights: the simple linear relation and the {\it absence} of the child decay rate $\lambda'$. The latter means early times are dominated by parent decay, as the child existence is negligible. This explicitly violates exchange symmetry at early times.
+        \begin{itemize}
+            \item The uranium and thorium isotopes of interest generally have long half-lives, and therefore small decay rates, keeping $\lambda t \ll 1$ valid for long intervals. For ``Is it small?''~questions, it's probably easier to think in terms of half-lives; \ie, ``Is $t/\tau$ small?''
+            \item Also, this result allows for quick interpretations. For example, an over-count of thorium, say due to imperfect purification, clearly leads to a linear increase in age.
+        \end{itemize}
+    \item The exchange symmetry leaves only two cases for the decay rates: similar rates and very different rates. Fig.~\ref{bateman-plot} shows these cases.
+    \item It is curious that there is seemingly a divergence in the limit as $\lambda' \to \lambda$. Physically, a divergence would not have a valid interpretation. However, taking the limit via L'Hôpital's rule, yields a ratio of $\lambda t e^{-\lambda t}$ for $\lambda' = \lambda$. A function of the form $xe^{-x}$ shares the same shape shown in Fig. (\ref{bateman-plot}), and all is well.
+\end{itemize}
+
+If the counts $n(t)$ and $n'(t)$ are known, we may obtain the time $t$ elapsed since the starting with $n_0$ initial isotopes.
 \begin{align}
     n'(t) &= \frac{\lambda}{\lambda'-\lambda} ne^{\lambda t}(e^{-\lambda t} - e^{-\lambda' t}) \nonumber\\
     \frac{\lambda' -\lambda}{\lambda}\frac{n'}{n} - 1 &= -e^{(\lambda - \lambda') t} \nonumber\\
@@ -71,46 +110,78 @@ This is called the {\bf Bateman equation}. If the counts $n(t)$ and $n'(t)$ are 
 
 The chronometry for each uranium isotope has a different scope of value. That is, each isotope can tell a different story with three components: the time elapsed since purification, isotope content, and enrichment history. For forensics, the 234 isotope has the most value and will be discussed in sufficient depth. The others will be summarized.
 
-The 234 isotope has a natural atomic ratio 235 vs.~234 of about 131 and a lifetime of order ${\cal O}(10^5\,)$ yr, compared to 235's lifetime of ${\cal O}(10^9)$ yr. With $\lambda_{{\rm U}\text{-}234} \ll \lambda_{{\rm Th}\text{-}230}$, there is no dominant timescale. However, in the context of uranium forensics, the purification time is much smaller than both isotope lifetimes, yielding a linear expansion of
-\beq
-    \frac{n_{{\rm Th}\text{-}230}(t)}{n_{{\rm U}\text{-}234}(0)} = \lambda_{{\rm U}\text{-}234}t + {\cal O}(\lambda^2 t^2).
-\eeq
-Since forensic time scales are sub-100 yr, the second-order corrections to first order is on the scale of $(\lambda t)^2 \sim {\cal O}(10^{-3})$, which probably rivals experimental error. Still, this result allows quick interpretations. For example, an over-count of thorium, say due to imperfect purification, clearly leads to a linear increase in age.
+The 234 isotope has a natural atomic ratio 235 vs.~234 of about 131 and a half-life of $\tau_{{\rm U}\text{-}234} = 245,500$ yr.  With $\tau_{{\rm Th}\text{-}230} = 75,400$ yr, thorium's half-life is barely dominant. By (\ref{linear-regime}), the linear regime for the ratio is valid for times of forensic interest, given $\tau_{{\rm Th}\text{-}230} = 75,400$ yr. Since forensic time scales are sub-100 yr, the ratio of the second-order corrections to first order is on the scale of $\lambda t \sim {\cal O}(10^{-3})$, which exceeds experimental error.
 
-Assuming perfect purification, this result is somewhat surprising. {\it A priori}, wasn't not clear that we can get percentile or better accuracy on the uranium age. After all, we have a range of isotope lifetimes up to $10^9$ yr, with a goal of measuring an age on the scale of months or years.
+
+As for the other isotopes, we may characterize them into different regimes. Let us define ``chain types'' depending on the relative hierarchy of parent-child half-lives: $\tau_{\rm p} \sim \tau_{\rm c}$, $\tau_{\rm p} \gg \tau_{\rm c}$, and $\tau_{\rm p} \ll \tau_{\rm c}$. For $\tau_{\rm p} \gg \tau_{\rm c}$, one may approximate to ignore the child isotope and skip straight to the grandchild. That is, just replace the child with the grandchild for Bateman decay. The grandchild may have a half-life that's viable for other chronometric utility.
+
+For either case of half-lives differing greatly, the half-life symmetry exchange property property of the Bateman equation yields the same result. This leads to an interesting result for $\tau_{\rm p} \ll \tau_{\rm c}$, where the parents decay all at once and the children live a very long time. This warps Fig. (\ref{bateman-plot}). Starting from time 0, the curve rises rapidly to a peak value that stays essentially flat for a long time, followed by slow, gradual decay. The flat region is called {\bf secular equilibrium}. For the reversed case of $\tau_{\rm p} \gg \tau_{\rm c}$, we get the same behavior but with a different interpretation. The secular equilibrium represent times when parent and child decay rates are essentially equal.
+
+{\it A priori}, it wasn't clear if theory itself would prevent us from obtaining reasonable accuracy on the uranium age. After all, we have a range of isotope half-lives up to $10^9$ yr, with a goal of measuring an age on the scale of months or years. However, what makes ${}^{234}$U special is both the parent and child half-lives are not too far above the scale of the forensic scale of interest, sub-100 yr, which makes it more experimentally forgiving. In general, if parent-child pair is to be useful for some area of chronometric value, at least one isotope must have a half-life on the time scale of interest. 
+
+\begin{table}
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{ccccc}
+  \toprule
+    Parent & Child & $\tau_{\rm parent}$ & $\tau_{\rm child}$ & Chain type\\
+  \midrule
+    ${}^{232}$U & ${}^{228}$Th & 68.9 yr & 1.9125 yr & $\tau_{\rm p} \gg \tau_{\rm c}$ \\
+    ${}^{233}$U & ${}^{229}$Th & $1.592\times10^5$ yr & 7,916 yr & $\tau_{\rm p} \gg \tau_{\rm c}$ \\
+    ${}^{234}$U & ${}^{230}$Th & $2.455(6)\times10^5$ yr & $7.54(3)\times10^4$ yr & $\tau_{\rm p} \sim \tau_{\rm c}$ \\
+    ${}^{235}$U & ${}^{231}$Th & $7.04\times10^8$ yr & 25.52 hr & $\tau_{\rm p} \gg \tau_{\rm c}$ \\
+    ${}^{236}$U & ${}^{232}$Th & $2.342\times10^7$ yr & $1.4\times10^{10}$ yr & $\tau_{\rm p} \ll \tau_{\rm c}$ \\
+    ${}^{238}$U & ${}^{234}$Th & $4.463\times10^9$ yr & 24.11 d & $\tau_{\rm p} \gg \tau_{\rm c}$ \\
+  \bottomrule
+\end{tabular}
+\caption{Uranium chronometry summary. Uncertainty for ${}^{230}$Th/${}^{234}$U are shown in parentheses.}
+\end{table}
+
+
 
 \section{Experimental methods}
 
-Notice the assumed starting point for the decay chain is that we start with only the parent isotope and no child or grandchild isotopes. Suppose a uranium swipe sample is taken at a long running facility. Then, if we want this ideal starting point, we'd need to chemically isolate the parent isotope, a process called {\bf purification}. This makes the utility of the decay results seem pointless; \ie it seems all we can do is attempt to reconstruct the time from purification to the time we do our particle counts through some spectroscopy method. But that's much easier done with a stopwatch. Let's go back to carbon dating to see how we can extract some utility out of this.
+The assumed starting point for Bateman decay is that we start with the parent isotope isolated. Suppose a uranium swipe sample is taken at a long running facility. Then, if we want this ideal starting point, we'd may chemically purify the parent isotope. Naively, this makes the utility of the chronometry seem pointless. That is, it seems all we can do is attempt to reconstruct the time from chemical purification to the time we do our particle counts through some spectroscopy method. But that's much easier done with a stopwatch. So it's obvious this isn't how it's done.
 
-\subsection{Carbon dating}
+\subsection{Mass spectroscopy}
 
-Carbon ${}^{12}$C is the stable, common carbon isotope. ${}^{14}$C has a half-life of 5,700~yr and is used for carbon dating. ${}^{14}$C is created from neutron capture on ${}^{14}\rm{N} +n \to {}^{14}\rm{C} + \rm{p}$. Decays of ${}^{14}$C will equilibrate with its production and settle on some relatively ratio. While a plant or animal was alive, it continuously consumed carbon at this fixed ratio. Once it died, the ratio diverges as ${}^{14}$C decays.
+This discussion isn't too relevant for these notes, but it exists as reassurance that we can, in fact, obtain isotope counts. Textbook mass spectroscopy requires two spatial regions -- a static electric field and a static magnetic field. A charged particle, an ion in this context, is accelerated by the electric field. It then enters the magnetic field, curls into a circular path where it hits a detector to measure a count. The circular radius is determined by the charge-to-mass ratio, which identifies the isotope.
 
-Mass spectroscopy can measure the present day ratio $R \equiv n^{14}/n^{12}$ in the fossil sample. If we assume the ratio $R_0$ in the atmosphere is fixed (it's not), then it's the same value as when the organism died. Then the organism died with a ratio $R_{\rm death} = R_0$, implying $n^{14}_{\rm death} = R_0 n^{12}_{\rm death}$. So the ratio $R/R_0 = n^{14}/n^{14}_{\rm death}$, since ${}^{12}$C doesn't decay or $n^{12} = n^{14}_{\rm death}$.
+The various spectroscopy methods primarily differ in how the isotopes are ionized. {\bf Plasma ionization}, or MC-ICP-MS (multi-collector inductively coupled plasma mass spectrometry), is primarily used for uranium chronometry and has implementations called IsoProbe and NuPlasma \cite{Williams1}. The {\bf TIMS} approach thermally ionizes a sample using a filament and is used for assay (isotope concentration) measurements. The {\bf AMS} approach employs an accelerator to ionize via particle collision and is used on extremely small samples, such as attogram-scale ($10^{-18}$ g) samples.
 
-Then by applying (\ref{exponential-decay}),
-\beq
-    \frac R{R_0} = e^{-\lambda_{14}\Delta t},
-\eeq
-we may obtain the elapsed time $\Delta t$ since death. (In real applications, the atmospheric ratio is not fixed and must be adjusted by a known mapping $R_0(t_{\rm death}) = f(t_{\rm death}) R_0(t_{\rm now})$. Notice $t_{\rm death}$ isn't known {\it a priori}, so an iterative numerical solution is needed.)
-
-\subsection{TIMS}
-
-A rough sketch of the {\bf TIMS}, thermal ionization mass spectroscopy, experimental technique follows. The TIMS method gets its name by heating a sample at a filament, ionizing some target atom or molecule. From here, textbook mass spectroscopy follows -- acceleration of the charge by an electric field, circular deflection by a magnetic field, and detection of the ion.
 
 \subsection{Isotope dilution}
 
-An experimental procedure called {\bf isotope dilution} allows a way to obtain the time elapsed since emission of UF${}_6$. The Bateman equation only requires a sample's present day count of thorium isotope and its parent uranium isotope. For concreteness, let's commit to ${}^{230}$Th and ${}^{234}$U. To obtain these counts, this technqiue {\bf spikes} the sample with a known amount of other long-lived isotopes that should not exist in the sample, say ${}^{229}$Th and ${}^{233}$U. The spike is mixed into the sample sufficiently well, such that any fraction of the sample has the same ratios of isotopes.
+An experimental procedure called {\bf isotope dilution} allows a way to obtain the time elapsed since emission of UF${}_6$ at a uranium enrichment facility. The Bateman equation only requires a sample's present day count of thorium isotope and its parent uranium isotope, or alternatively, just their ratio. For concreteness, let's commit to ${}^{230}$Th and ${}^{234}$U. To obtain these counts, the isotope dilution technique {\bf spikes} the sample with a known amount of other long-lived isotopes that should not exist in the sample, say ${}^{229}$Th and ${}^{233}$U. The spike is mixed into the sample sufficiently well, such that any fraction of the sample has the same ratios of isotopes.
 
 From mass spectrometry, the counts of each isotope are made. Focusing on thorium first (then uranium separately), we may form a ratio
 \beq
     R \equiv \frac{n'_{{\rm Th}\text{-}230}}{n'_{{\rm Th}\text{-}229}}
 \eeq
-where the prime notation denotes experimental measurements. We may obtain the sample's count using
+where the prime notation denotes experimental measurements, where the experiment is performed over a fraction of the sample. That is, both thorium isotope counts are obtained, and so the ratio is known. We may obtain the whole sample's count using
 \beq
     n_{{\rm Th}\text{-}230} = R n_{{\rm Th}\text{-}229}
 \eeq
-where the un-primed notation refers to the sample counts. The same can be done for the uranium isotopes.
+where the un-primed notation refers to the whole sample counts. The same can be done for the uranium isotopes. With the thorium and uranium counts for the sample both obtained, we may apply (\ref{parent-age}).
 
+\subsection{Experimental challenges}
+
+The ${}^{230}$Th/${}^{234}$U chronometric age of a uranium sample is obtainable at the percentile level \cite{Williams1}. Perfect purification is unobtainable, and trace thorium will remain in the chemically separated uranium sample. The excess thorium yields an over-count during mass spectroscopy, leading to an overall positive bias to all age measurements.
+
+Half-life uncertainties are generally sub-percentile. As forensic chronometry is well in the linear regime of (\ref{linear-regime}), the chronometric age uncertainties are also sub-percentile. 
+
+\begin{thebibliography}{1}
+
+%\cite{Stanley}
+\bibitem{Stanley} 
+  F.\ E.\ Stanley,
+  J.\ Anal.\ At.\ Spectrom., {\bf 27}, 1821 (2012).
+
+%\cite{Williams1}
+\bibitem{Williams1} 
+  R.\ W.\ Williams and A.\ M.\ Gaffney,
+  {\it Proc.\ Radiochim.\  Acta}, {\bf 1}, 31 (2011).
+
+\end{thebibliography}
 \end{document}
