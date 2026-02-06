@@ -65,7 +65,7 @@ This is solved as follows.
     \frac{dn'}{dt} + \lambda' n' &= \lambda n_0 e^{-\lambda t} \nonumber\\
     e^{-\lambda't} \, d(n' e^{\lambda't}) &= dt \, \lambda n_0 e^{-\lambda t} \nonumber\\
     \int_0^t d(n' e^{\lambda't}) &= \int_0^t dt \, \lambda n_0 e^{(\lambda' -\lambda)t} \nonumber\\
-    n'(t) e^{\lambda't} - n'_0 &= \frac{\lambda}{\lambda'-\lambda} n_0 e^{(\lambda' -\lambda)t} \nonumber\\
+    n'(t) e^{\lambda't} - n'_0 &= \frac{\lambda}{\lambda'-\lambda} n_0 (e^{(\lambda' -\lambda)t} - 1) \nonumber\\
     n'(t) &= \frac{\lambda}{\lambda'-\lambda} n_0(e^{-\lambda t} - e^{-\lambda' t}) \nonumber\\
     \rho(t) &= \frac{\lambda}{\lambda'-\lambda} (e^{-\lambda t} - e^{-\lambda' t})
     \label{bateman}
@@ -95,6 +95,7 @@ This is called the {\bf Bateman equation}, but this gives too much credit for a 
         \end{itemize}
     \item The exchange symmetry leaves only two cases for the decay rates: similar rates and very different rates. Fig.~\ref{bateman-plot} shows these cases.
     \item It is curious that there is seemingly a divergence in the limit as $\lambda' \to \lambda$. Physically, a divergence would not have a valid interpretation. However, taking the limit via L'Hôpital's rule, yields a ratio of $\lambda t e^{-\lambda t}$ for $\lambda' = \lambda$. A function of the form $xe^{-x}$ shares the same shape shown in Fig. (\ref{bateman-plot}), and all is well.
+    \item In the calculation of (\ref{bateman}), the initial child isotope count $n'_0 \equiv n'(0)$ was set to zero by the assumption of perfect purification. If this assumption is relaxed, then the ratio is corrected by $\rho(t) \to \rho + (n'_0/n_0)e^{-\lambda't}$. At the purification time $t=0$, this just leads to a positive shift. At later times of forensic interest, this Taylor expands to a linear shift that just adds the initial shift to the ratio at all times; \ie, once shifted, always shifted (for small times).
 \end{itemize}
 
 If the counts $n(t)$ and $n'(t)$ are known, we may obtain the time $t$ elapsed since the starting with $n_0$ initial isotopes.
