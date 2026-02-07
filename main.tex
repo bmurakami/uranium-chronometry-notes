@@ -78,7 +78,7 @@ This is solved as follows.
   \label{bateman-plot}
 \end{figure}
 %
-This is called the {\bf Bateman equation}, but this gives too much credit for a homework-level problem, and should be referred to as {\bf two-step decay} or {\bf two-stage decay}. We have defined the ratio $\rho(t) \equiv n'(t)/n_0$. There are a few things to note.
+This is called the {\bf Bateman equation}, but this gives too much credit for a homework-level problem, and should be referred to as {\bf two-step decay} or {\bf two-stage decay}. We have defined the ratio $\rho(t) \equiv n'(t)/n_0$. Thiss results warrants several comments and insights.
 \begin{itemize}
     \item Experimentally, the parent's initial count, $n_0 \equiv n(0)$, is often unobtainable. So we focus on the ratio $n'(t)/n_0$.
     \item Like single species decay, this follows exponential decay. Eventually, both the parent and child {\it completely} decay away.
@@ -109,12 +109,13 @@ If the counts $n(t)$ and $n'(t)$ are known, we may obtain the time $t$ elapsed s
 
 \subsection{Chronometry value of uranium isotopes}
 
-The chronometry for each uranium isotope has a different scope of value. That is, each isotope can tell a different story with three components: the time elapsed since purification, isotope content, and enrichment history. For forensics, the 234 isotope has the most value and will be discussed in sufficient depth. The others will be summarized.
+The chronometry for each uranium isotope has a different scope of value. That is, each isotope can tell a different story with three components: the time elapsed since purification, isotope content, and enrichment history. For forensics, the 234 and 235 isotopes have the most value and will be discussed in sufficient depth. The others will be summarized.
 
 The 234 isotope has a natural atomic ratio 235 vs.~234 of about 131 and a half-life of $\tau_{{\rm U}\text{-}234} = 245,500$ yr.  With $\tau_{{\rm Th}\text{-}230} = 75,400$ yr, thorium's half-life is barely dominant. By (\ref{linear-regime}), the linear regime for the ratio is valid for times of forensic interest, given $\tau_{{\rm Th}\text{-}230} = 75,400$ yr. Since forensic time scales are sub-100 yr, the ratio of the second-order corrections to first order is on the scale of $\lambda t \sim {\cal O}(10^{-3})$, which exceeds experimental error.
 
-
 As for the other isotopes, we may characterize them into different regimes. Let us define ``chain types'' depending on the relative hierarchy of parent-child half-lives: $\tau_{\rm p} \sim \tau_{\rm c}$, $\tau_{\rm p} \gg \tau_{\rm c}$, and $\tau_{\rm p} \ll \tau_{\rm c}$. For $\tau_{\rm p} \gg \tau_{\rm c}$, one may approximate to ignore the child isotope and skip straight to the grandchild. That is, just replace the child with the grandchild for Bateman decay. The grandchild may have a half-life that's viable for other chronometric utility.
+
+The 235 isotope is interesting because is child ${}^{231}$Th is very short lived with a half-life of 25.52 hours, or about 1 day, which is nearly instantaneous on the forensic scale. Therefore, the ${}^{231}$Pa grandchild with a half-life of $\tau_{{\rm Pa}\text{-}231} = 3.276(26)\times10^4$ yr is used for forensics instead. However, on forensic timescales, the ratio is $\rho(t) = \ln(2) \cdot t/\tau_{{\rm U}\text{-}235}$ where $\tau_{{\rm U}\text{-}235} \sim {\cal O}(10^9)$, which will amplify measurement error for $\rho$ vs.~using ${}^{234}$U chronometry, which has a lifetime of order $\tau_{{\rm U}\text{-}234} \sim {\cal O}(10^5)$. In practice, using both 234 and 235 chronometries provides a consistency check for both techniques.
 
 For either case of half-lives differing greatly, the half-life symmetry exchange property property of the Bateman equation yields the same result. This leads to an interesting result for $\tau_{\rm p} \ll \tau_{\rm c}$, where the parents decay all at once and the children live a very long time. This warps Fig. (\ref{bateman-plot}). Starting from time 0, the curve rises rapidly to a peak value that stays essentially flat for a long time, followed by slow, gradual decay. The flat region is called {\bf secular equilibrium}. For the reversed case of $\tau_{\rm p} \gg \tau_{\rm c}$, we get the same behavior but with a different interpretation. The secular equilibrium represent times when parent and child decay rates are essentially equal.
 
@@ -131,15 +132,13 @@ For either case of half-lives differing greatly, the half-life symmetry exchange
     ${}^{232}$U & ${}^{228}$Th & 68.9 yr & 1.9125 yr & $\tau_{\rm p} \gg \tau_{\rm c}$ \\
     ${}^{233}$U & ${}^{229}$Th & $1.592\times10^5$ yr & 7,916 yr & $\tau_{\rm p} \gg \tau_{\rm c}$ \\
     ${}^{234}$U & ${}^{230}$Th & $2.455(6)\times10^5$ yr & $7.54(3)\times10^4$ yr & $\tau_{\rm p} \sim \tau_{\rm c}$ \\
-    ${}^{235}$U & ${}^{231}$Th & $7.04\times10^8$ yr & 25.52 hr & $\tau_{\rm p} \gg \tau_{\rm c}$ \\
+    ${}^{235}$U & ${}^{231}$Pa & $7.04(1)\times10^8$ yr & $3.276(26)\times10^4$ yr & $\tau_{\rm p} \gg \tau_{\rm c}$ \\
     ${}^{236}$U & ${}^{232}$Th & $2.342\times10^7$ yr & $1.4\times10^{10}$ yr & $\tau_{\rm p} \ll \tau_{\rm c}$ \\
     ${}^{238}$U & ${}^{234}$Th & $4.463\times10^9$ yr & 24.11 d & $\tau_{\rm p} \gg \tau_{\rm c}$ \\
   \bottomrule
 \end{tabular}
-\caption{Uranium chronometry summary. Uncertainty for ${}^{230}$Th/${}^{234}$U are shown in parentheses.}
+\caption{Uranium chronometry summary. Uncertainty for ${}^{230}$Th/${}^{234}$U and ${}^{231}$Th/${}^{235}$U are shown in parentheses. For ${}^{235}$U, the grandchild ${}^{231}$Pa is shown, as the child ${}^{231}$Th is too short-lived to be practical with a half-life of 25.52 hours.}
 \end{table}
-
-
 
 \section{Experimental methods}
 
