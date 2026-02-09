@@ -37,7 +37,7 @@ Stanley \cite{Stanley} provides a disappointing but useful review of the theory.
 
 \subsection{Two-step decay}
 
-The assumption that fundamental physical law, quantum theory in this context, remains unchanged throughout time, means the quantum state of an unstable isotope has no memory. That is, it has no internal clock. In principle, theory is capable of providing a half-life for an unstable quantum state.\footnote{This is where the physics of this context ends, aside from the experimental extraction of isotope concentrations, which only provides inputs to the analysis, which is purely mathematical.} This allows the statement that the number of isotope decays $dn$ in a short time interval $dt$ is proportional the number of currently existing isotopes. This may be expressed as
+The assumption that fundamental physical law, quantum theory in this context, remains unchanged throughout time, means the quantum state of an unstable isotope has no memory. That is, it has no internal clock. In principle, theory is capable of providing a half-life for an unstable quantum state.\footnote{This is where the physics of this context ends. Aside from the experimental extraction of isotope concentrations, which only provides inputs to the analysis, this topic is nearly a purely mathematical analysis.} This allows the statement that the number of isotope decays $dn$ in a short time interval $dt$ is proportional the number of currently existing isotopes. This may be expressed as
 \beq
     \frac{dn}{dt} = -\lambda n(t),
 \eeq
@@ -49,6 +49,8 @@ where the minus sign is due to the decrease in the particle count $n$ and $\lamb
     n(t) &= n_0 e^{-\lambda t}.
     \label{exponential-decay}
 \end{align}
+%
+Note that the decay rate $dn/dt$ has a value of $\lambda n$, called the {\bf activity}. The SI unit is the becquerel (Bq) and is defined as one decay per second. Practically, activity tells us if a sample will have enough decays for measurement. For example, for a 1 pg sample of ${}^{230}$Th, there are roughly $10^9$ thorium atoms, from Fig.~3 of \cite{Williams1}. this corresponds to less than $10^{-3}$ Bq, which seems small, but over one week and assuming 1\% of decays are captured by measurement, Fig.~4 shows about $10^4$ decay counts.
 
 The time when $n(t) = \frac 1 2 n_0$ is called the {\bf half-life} $\tau$ and is related to the decay constant by
 \beq
@@ -106,6 +108,8 @@ If the counts $n(t)$ and $n'(t)$ are known, we may obtain the time $t$ elapsed s
     t &= \frac 1 {\lambda - \lambda'} \ln\left(1 - \frac{\lambda' -\lambda}{\lambda}\frac{n'}{n} \right)
     \label{parent-age}
 \end{align}
+%
+An expression for the propagation of uncertainty on (\ref{parent-age}) can be found in the Appendix of \cite{Williams1}. The same appendix also contains the Bateman equation for the grandchild population (3-stage decay).
 
 \subsection{Chronometry value of uranium isotopes}
 
@@ -144,11 +148,13 @@ For either case of half-lives differing greatly, the half-life symmetry exchange
 
 The assumed starting point for Bateman decay is that we start with the parent isotope isolated. Suppose a uranium swipe sample is taken at a long running facility. Then, if we want this ideal starting point, we'd may chemically purify the parent isotope. Naively, this makes the utility of the chronometry seem pointless. That is, it seems all we can do is attempt to reconstruct the time from chemical purification to the time we do our particle counts through some spectroscopy method. But that's much easier done with a stopwatch. So it's obvious this isn't how it's done.
 
+The process above measures the {\bf sample age}; \ie, the time from preparation via chemical purification to measurement via mass spectroscopy. It is the {\bf model age} that measures from the time of the first purification by some production mechanism, \eg~from UF${}_6$ gas emission, to measurement. Below, the methodologies to obtain the model age follows.
+
 \subsection{Mass spectroscopy}
 
 This discussion isn't too relevant for these notes, but it exists as reassurance that we can, in fact, obtain isotope counts. Textbook mass spectroscopy requires two spatial regions -- a static electric field and a static magnetic field. A charged particle, an ion in this context, is accelerated by the electric field. It then enters the magnetic field, curls into a circular path where it hits a detector to measure a count. The circular radius is determined by the charge-to-mass ratio, which identifies the isotope.
 
-The various spectroscopy methods primarily differ in how the isotopes are ionized. {\bf Plasma ionization}, or MC-ICP-MS (multi-collector inductively coupled plasma mass spectrometry), is primarily used for uranium chronometry and has implementations called IsoProbe and NuPlasma \cite{Williams1}. The {\bf TIMS} approach thermally ionizes a sample using a filament and is used for assay (isotope concentration) measurements. The {\bf AMS} approach employs an accelerator to ionize via particle collision and is used on extremely small samples, such as attogram-scale ($10^{-18}$ g) samples.
+The various spectroscopy methods primarily differ in how the isotopes are ionized. {\bf Plasma ionization}, or MC-ICP-MS (multi-collector inductively coupled plasma mass spectrometry), is primarily used for uranium chronometry and has implementations called IsoProbe and NuPlasma \cite{Williams2}. The {\bf TIMS} approach thermally ionizes a sample using a filament and is used for assay (isotope concentration) measurements. The {\bf AMS} approach employs an accelerator to ionize via particle collision and is used on extremely small samples, such as attogram-scale ($10^{-18}$ g) samples.
 
 
 \subsection{Isotope dilution}
@@ -167,7 +173,7 @@ where the un-primed notation refers to the whole sample counts. The same can be 
 
 \subsection{Experimental challenges}
 
-The ${}^{230}$Th/${}^{234}$U chronometric age of a uranium sample is obtainable at the percentile level \cite{Williams1}. Perfect purification is unobtainable, and trace thorium will remain in the chemically separated uranium sample. The excess thorium yields an over-count during mass spectroscopy, leading to an overall positive bias to all age measurements.
+The ${}^{230}$Th/${}^{234}$U chronometric age of a uranium sample is obtainable at the percentile level \cite{Williams2}. Perfect purification is unobtainable, and trace thorium will remain in the chemically separated uranium sample. The excess thorium yields an over-count during mass spectroscopy, leading to an overall positive bias to all age measurements.
 
 Half-life uncertainties are generally sub-percentile. As forensic chronometry is well in the linear regime of (\ref{linear-regime}), the chronometric age uncertainties are also sub-percentile. 
 
@@ -178,8 +184,12 @@ Half-life uncertainties are generally sub-percentile. As forensic chronometry is
   F.\ E.\ Stanley,
   J.\ Anal.\ At.\ Spectrom., {\bf 27}, 1821 (2012).
 
-%\cite{Williams1}
-\bibitem{Williams1} 
+\bibitem{Williams1}
+  R.\ Williams, A.\ Gaffney, M.\ Kristo,
+  LLNL-TR-701379 (2016).
+
+%\cite{Williams2}
+\bibitem{Williams2} 
   R.\ W.\ Williams and A.\ M.\ Gaffney,
   {\it Proc.\ Radiochim.\  Acta}, {\bf 1}, 31 (2011).
 
